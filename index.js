@@ -98,6 +98,31 @@ module.exports = function(nforce, pluginName) {
     return this._apiRequest(opts, opts.callback);
   });
 
+  // http://www.salesforce.com/us/developer/docs/chatterapi/Content/quickreference_post_feed_item.htm
+  plugin.fn('postFeedItemLink', function(args, callback) {
+    var validator = validate(args, ['id', 'urlText', 'url']);
+    var opts = this._getOpts(args, callback);
+    if (validator.error) return callback(new Error(validator.message), null);
+    opts.uri = opts.oauth.instance_url + '/services/data/' + this.apiVersion
+        + '/chatter/feed-elements';
+    var body = {
+        "feedElementType" : "FeedItem",
+        "subjectId" : args.id,
+        "capabilities": {
+          "link": {
+            "url": args.url,
+            "urlName": args.urlText
+          }
+        }
+      };
+    if(args.text) {
+      body.body = { "messageSegments": [ { "type": "Text", "text": args.text } ] };
+    }
+    opts.method = 'POST';
+    opts.body = JSON.stringify(body);
+    return this._apiRequest(opts, opts.callback);
+  });
+
 
   // utility method to validate inputs
   function validate(args, required) {

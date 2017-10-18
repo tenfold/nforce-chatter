@@ -81,7 +81,7 @@ callback(err, resp);
 
 API calls take two arguments:
 
-  1. A JavaScript object containing the data for the function  
+  1. A JavaScript object containing the data for the function
   2. The callback
 
 ```js
@@ -138,6 +138,15 @@ Posts a new feeditem for a record.
 
 * `id`: Required. The ID of the parent this feed element is being posted to. This value can be the ID of a user, group, or record, or the string me to indicate the context user.
 * `text`: Required. The text of the post.
+
+### postFeedItemLink()
+
+Posts a new feeditem for a record with a link instead of a text.
+
+* `id`: Required. The ID of the parent this feed element is being posted to. This value can be the ID of a user, group, or record, or the string me to indicate the context user.
+* `url`: Required. The url of the post.
+* `urlText`: Required. The text displayed in the url.
+* `text`: Optional. Optional text to be displayed along with the link.
 
 ### postComment()
 
