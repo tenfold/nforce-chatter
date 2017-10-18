@@ -123,6 +123,29 @@ module.exports = function(nforce, pluginName) {
     return this._apiRequest(opts, opts.callback);
   });
 
+  // https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/connect_resources_feed_element_specific.htm#connect_resources_feed_element_specific
+  plugin.fn('editFeedItemLink', function(args, callback) {
+    var validator = validate(args, ['id', 'urlText', 'url']);
+    var opts = this._getOpts(args, callback);
+    if (validator.error) return callback(new Error(validator.message), null);
+    opts.uri = opts.oauth.instance_url + '/services/data/' + this.apiVersion
+        + '/chatter/feed-elements/' + args.id;
+    var body = {
+        "capabilities": {
+          "link": {
+            "url": args.url,
+            "urlName": args.urlText
+          }
+        }
+      };
+    if(args.text) {
+      body.body = { "messageSegments": [ { "type": "Text", "text": args.text } ] };
+    }
+    opts.method = 'PATCH';
+    opts.body = JSON.stringify(body);
+    return this._apiRequest(opts, opts.callback);
+  });
+
 
   // utility method to validate inputs
   function validate(args, required) {

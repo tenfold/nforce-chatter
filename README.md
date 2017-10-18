@@ -148,6 +148,15 @@ Posts a new feeditem for a record with a link instead of a text.
 * `urlText`: Required. The text displayed in the url.
 * `text`: Optional. Optional text to be displayed along with the link.
 
+### editFeedItemLink()
+
+Edit a existing feeditem for a record with a link instead of a text.
+
+* `id`: Required. The ID of the feed.
+* `url`: Required. The url of the post.
+* `urlText`: Required. The text displayed in the url.
+* `text`: Optional. Optional text to be displayed along with the link.
+
 ### postComment()
 
 Posts a new comment on a feeditem.
